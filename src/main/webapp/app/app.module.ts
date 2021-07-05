@@ -1,19 +1,31 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppComponent } from './app.component';
 import './vendor';
 import { YSharedModule } from 'app/shared/shared.module';
 import { YCoreModule } from 'app/core/core.module';
 import { YAppRoutingModule } from './app-routing.module';
 import { YHomeModule } from './home/home.module';
 import { YEntityModule } from './entities/entity.module';
-// jhipster-needle-angular-add-module-import JHipster will add new module here
-import { MainComponent } from './layouts/main/main.component';
-import { NavbarComponent } from './layouts/navbar/navbar.component';
-import { FooterComponent } from './layouts/footer/footer.component';
-import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
-import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
-import { ErrorComponent } from './layouts/error/error.component';
+import { NavBarComponent } from './layouts/admin/nav-bar/nav-bar.component';
+import { AdminComponent } from './layouts/admin/admin.component';
+import { AuthComponent } from './layouts/auth/auth.component';
+import { NavigationComponent } from './layouts/admin/navigation/navigation.component';
+import { NavContentComponent } from './layouts/admin/navigation/nav-content/nav-content.component';
+import { NavGroupComponent } from './layouts/admin/navigation/nav-content/nav-group/nav-group.component';
+import { NavCollapseComponent } from './layouts/admin/navigation/nav-content/nav-collapse/nav-collapse.component';
+import { NavItemComponent } from './layouts/admin/navigation/nav-content/nav-item/nav-item.component';
+import { NavLeftComponent } from './layouts/admin/nav-bar/nav-left/nav-left.component';
+import { NavSearchComponent } from './layouts/admin/nav-bar/nav-left/nav-search/nav-search.component';
+import { NavRightComponent } from './layouts/admin/nav-bar/nav-right/nav-right.component';
+import { ConfigurationComponent } from './layouts/admin/configuration/configuration.component';
+
+/* Menu Items */
+import { NavigationItem } from './layouts/admin/navigation/navigation';
+import { NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -23,9 +35,31 @@ import { ErrorComponent } from './layouts/error/error.component';
     YHomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     YEntityModule,
-    YAppRoutingModule
+    YAppRoutingModule,
+    BrowserAnimationsModule,
+    NgbDropdownModule,
+    NgbTooltipModule,
+    NgbButtonsModule,
+    NgbTabsetModule
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
-  bootstrap: [MainComponent]
+  declarations: [
+    AppComponent,
+    AdminComponent,
+    AuthComponent,
+    NavigationComponent,
+    NavContentComponent,
+    NavGroupComponent,
+    NavCollapseComponent,
+    NavItemComponent,
+    NavBarComponent,
+    NavLeftComponent,
+    NavSearchComponent,
+    NavRightComponent,
+    ConfigurationComponent
+  ],
+  providers: [NavigationItem],
+  bootstrap: [AdminComponent]
+  // declarations: [MainComponent, NavBarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  // bootstrap: [MainComponent]
 })
 export class YAppModule {}
