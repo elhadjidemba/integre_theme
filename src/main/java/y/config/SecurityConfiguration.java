@@ -1,9 +1,7 @@
 package y.config;
 
-import y.security.AuthoritiesConstants;
-import y.service.AuditEventService;
-import io.github.jhipster.web.filter.reactive.CookieCsrfFilter;
-import y.web.filter.SpaWebFilter;
+import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -30,23 +28,29 @@ import org.springframework.security.web.server.util.matcher.NegatedServerWebExch
 import org.springframework.security.web.server.util.matcher.OrServerWebExchangeMatcher;
 import org.zalando.problem.spring.webflux.advice.security.SecurityProblemSupport;
 import reactor.core.publisher.Mono;
-
-import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
+import tech.jhipster.config.JHipsterProperties;
+import tech.jhipster.web.filter.reactive.CookieCsrfFilter;
+import y.security.AuthoritiesConstants;
+import y.web.filter.SpaWebFilter;
 
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration {
 
-    private final ReactiveUserDetailsService userDetailsService;
+    private final JHipsterProperties jHipsterProperties;
 
-    private final AuditEventService auditEventService;
+    private final ReactiveUserDetailsService userDetailsService;
 
     private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(ReactiveUserDetailsService userDetailsService, AuditEventService auditEventService, SecurityProblemSupport problemSupport) {
+    public SecurityConfiguration(
+        ReactiveUserDetailsService userDetailsService,
+        JHipsterProperties jHipsterProperties,
+        SecurityProblemSupport problemSupport
+    ) {
         this.userDetailsService = userDetailsService;
-        this.auditEventService = auditEventService;
+        this.jHipsterProperties = jHipsterProperties;
         this.problemSupport = problemSupport;
     }
 
@@ -57,7 +61,9 @@ public class SecurityConfiguration {
 
     @Bean
     public ReactiveAuthenticationManager reactiveAuthenticationManager() {
-        UserDetailsRepositoryReactiveAuthenticationManager authenticationManager = new UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService);
+        UserDetailsRepositoryReactiveAuthenticationManager authenticationManager = new UserDetailsRepositoryReactiveAuthenticationManager(
+            userDetailsService
+        );
         authenticationManager.setPasswordEncoder(passwordEncoder());
         return authenticationManager;
     }
@@ -67,7 +73,7 @@ public class SecurityConfiguration {
         // @formatter:off
         http
             .securityMatcher(new NegatedServerWebExchangeMatcher(new OrServerWebExchangeMatcher(
-                pathMatchers("/app/**", "/i18n/**", "/content/**", "/swagger-ui/**", "/test/**", "/webjars/**"),
+                pathMatchers("/app/**", "/i18n/**", "/content/**", "/swagger-ui/**", "/swagger-resources/**", "/v2/api-docs", "/v3/api-docs", "/test/**"),
                 pathMatchers(HttpMethod.OPTIONS, "/**")
             )))
             .csrf()
@@ -92,26 +98,28 @@ public class SecurityConfiguration {
             .logoutSuccessHandler(new HttpStatusReturningServerLogoutSuccessHandler())
         .and()
             .headers()
-                .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:")
+            .contentSecurityPolicy(jHipsterProperties.getSecurity().getContentSecurityPolicy())
             .and()
                 .referrerPolicy(ReferrerPolicyServerHttpHeadersWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
             .and()
-                .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'")
+                .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'self'; payment 'none'")
             .and()
                 .frameOptions().disable()
         .and()
             .authorizeExchange()
             .pathMatchers("/").permitAll()
             .pathMatchers("/*.*").permitAll()
+            .pathMatchers("/api/authenticate").permitAll()
             .pathMatchers("/api/register").permitAll()
             .pathMatchers("/api/activate").permitAll()
-            .pathMatchers("/api/authenticate").permitAll()
             .pathMatchers("/api/account/reset-password/init").permitAll()
             .pathMatchers("/api/account/reset-password/finish").permitAll()
             .pathMatchers("/api/auth-info").permitAll()
+            .pathMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .pathMatchers("/api/**").authenticated()
-            .pathMatchers("/services/**", "/swagger-resources/**", "/v2/api-docs").authenticated()
+            .pathMatchers("/services/**").authenticated()
             .pathMatchers("/management/health").permitAll()
+            .pathMatchers("/management/health/**").permitAll()
             .pathMatchers("/management/info").permitAll()
             .pathMatchers("/management/prometheus").permitAll()
             .pathMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
@@ -121,22 +129,11 @@ public class SecurityConfiguration {
 
     private Mono<Void> onAuthenticationError(WebFilterExchange exchange, AuthenticationException e) {
         exchange.getExchange().getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-        return exchange.getExchange()
-                .getFormData()
-                .map(data -> data.getFirst("username"))
-                .filter(login -> !Constants.ANONYMOUS_USER.equals(login))
-                .flatMap(login -> auditEventService.saveAuthenticationError(login, e))
-                .then();
+        return Mono.empty();
     }
 
     private Mono<Void> onAuthenticationSuccess(WebFilterExchange exchange, Authentication authentication) {
         exchange.getExchange().getResponse().setStatusCode(HttpStatus.OK);
-        return Mono.just(authentication.getPrincipal())
-                .filter(principal -> principal instanceof User)
-                .map(principal -> ((User) principal).getUsername())
-                .filter(login -> !Constants.ANONYMOUS_USER.equals(login))
-                .flatMap(auditEventService::saveAuthenticationSuccess)
-                .then();
+        return Mono.empty();
     }
-
 }

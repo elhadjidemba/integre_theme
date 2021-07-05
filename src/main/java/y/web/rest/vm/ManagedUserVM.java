@@ -1,12 +1,12 @@
 package y.web.rest.vm;
 
-import y.service.dto.UserDTO;
 import javax.validation.constraints.Size;
+import y.service.dto.AdminUserDTO;
 
 /**
- * View Model extending the UserDTO, which is meant to be used in the user management UI.
+ * View Model extending the AdminUserDTO, which is meant to be used in the user management UI.
  */
-public class ManagedUserVM extends UserDTO {
+public class ManagedUserVM extends AdminUserDTO {
 
     public static final int PASSWORD_MIN_LENGTH = 4;
 
@@ -27,6 +27,7 @@ public class ManagedUserVM extends UserDTO {
         this.password = password;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "ManagedUserVM{" + super.toString() + "} ";

@@ -4,7 +4,7 @@
       "packageName": "y",
       "nativeLanguage": "fr"
     },
-    "jhipsterVersion": "6.8.0",
+    "jhipsterVersion": "7.1.0",
     "applicationType": "monolith",
     "baseName": "y",
     "packageName": "y",
@@ -39,6 +39,15 @@
     "nativeLanguage": "fr",
     "languages": ["fr", "en"],
     "blueprints": [],
-    "reactive": true
+    "reactive": true,
+    "skipUserManagement": false,
+    "withAdminUi": true,
+    "skipClient": false,
+    "skipServer": false,
+    "skipCheckLengthOfIdentifier": false,
+    "skipFakeData": false,
+    "pages": [],
+    "devServerPort": 4200,
+    "entities": []
   }
 }

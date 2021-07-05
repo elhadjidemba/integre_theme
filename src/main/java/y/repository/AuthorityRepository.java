@@ -1,11 +1,9 @@
 package y.repository;
 
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import y.domain.Authority;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 /**
- * Spring Data JPA repository for the {@link Authority} entity.
+ * Spring Data R2DBC repository for the {@link Authority} entity.
  */
-public interface AuthorityRepository extends ReactiveJpaRepository<Authority, String> {
-}
+public interface AuthorityRepository extends R2dbcRepository<Authority, String> {}
