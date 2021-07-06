@@ -45,22 +45,22 @@ import { ErrorComponent } from './layouts/error/error.component';
       loader: {
         provide: TranslateLoader,
         useFactory: translatePartialLoader,
-        deps: [HttpClient],
+        deps: [HttpClient]
       },
       missingTranslationHandler: {
         provide: MissingTranslationHandler,
-        useFactory: missingTranslationHandler,
-      },
-    }),
+        useFactory: missingTranslationHandler
+      }
+    })
   ],
   providers: [
     Title,
     { provide: LOCALE_ID, useValue: 'fr' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
-    httpInterceptorProviders,
+    httpInterceptorProviders
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
-  bootstrap: [MainComponent],
+  bootstrap: [MainComponent]
 })
 export class AppModule {
   constructor(
@@ -73,7 +73,13 @@ export class AppModule {
     applicationConfigService.setEndpointPrefix(SERVER_API_URL);
     registerLocaleData(locale);
     iconLibrary.addIcons(...fontAwesomeIcons);
-    dpConfig.minDate = { year: dayjs().subtract(100, 'year').year(), month: 1, day: 1 };
+    dpConfig.minDate = {
+      year: dayjs()
+        .subtract(100, 'year')
+        .year(),
+      month: 1,
+      day: 1
+    };
     translateService.setDefaultLang('fr');
     // if user have changed language and navigates away from the application and back to the application then use previously choosed language
     const langKey = sessionStorageService.retrieve('locale') ?? 'fr';
