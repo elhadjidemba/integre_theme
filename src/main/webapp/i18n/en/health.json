@@ -13,7 +13,10 @@
     "indicator": {
       "diskSpace": "Disk space",
       "mail": "Email",
-      "ping": "Application"
+      "livenessState": "Liveness state",
+      "readinessState": "Readiness state",
+      "ping": "Application",
+      "r2dbc": "Database"
     },
     "table": {
       "service": "Service name",

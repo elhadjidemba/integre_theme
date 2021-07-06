@@ -14,20 +14,27 @@
 # ===================================================================
 
 spring:
+  profiles:
+  # Uncomment the following line to enable tests against production database type rather than H2, using Testcontainers
+  #active: testcontainers
   application:
     name: y
   jackson:
     serialization:
       write-durations-as-timestamps: false
+  liquibase:
+    contexts: test
+    url: jdbc:h2:mem:y;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
   mail:
     host: localhost
   main:
     allow-bean-definition-overriding: true
   messages:
     basename: i18n/messages
-  mvc:
-    favicon:
-      enabled: false
+  r2dbc:
+    url: r2dbc:h2:mem:///y;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: r2dbc
+    password:
   task:
     execution:
       thread-name-prefix: y-task-
@@ -57,17 +64,15 @@ jhipster:
     name: 'yApp'
   logging:
     # To test json console appender
-    use-json-format: true # By default, logs are in Json format
+    use-json-format: false
     logstash:
       enabled: false
       host: localhost
       port: 5000
       queue-size: 512
-  metrics:
-    logs: # Reports metrics in the logs
-      enabled: true
-      report-frequency: 60 # in seconds
-
+  mail:
+    from: test@localhost
+    base-url: http://127.0.0.1:8080
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

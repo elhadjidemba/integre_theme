@@ -1,6 +1,4 @@
-/**======================================================================
-=========================================================================
-Template Name: Able Pro Admin Template
+/*Template Name: Able Pro Admin Template
 Author: Codedthemes
 File: style.css
 =========================================================================
@@ -8,7 +6,7 @@ File: style.css
   == Table of Contents==
 	- Generic classes
 		-	Margin, Padding, Font class, text align, position, floating, overflow, background class, text color, display class, boarder class
-	- Theme Elements
+	- Theme Elementsgit status
 		-	Accordion, Button, tabs, typography, buttons, box shadow, Lable & Badges, Alert, Pagination, Breadcumb, Cards, Collapse,
         -   Carousel, Grid, Progress, Model, tooltip, popover, Datepicker, Gridstack, lightbox, notification, Nestable, pnotify, rating,
         -   Rangeslider, Slider, Syntax Highlighter, Tour, Treeview, Toolbar, Session Timeout, Session idle Timeout, offline, Animation
@@ -36,6 +34,15 @@ File: style.css
 @import 'ng-module/ng-module';
 
 // bootstrap
+/* after changing this file run 'npm run webapp:build' */
+
+/***************************
+put Sass variables here:
+eg $input-color: red;
+****************************/
+// Override Bootstrap variables
+@import 'bootstrap-variables';
+// Import Bootstrap source files from node_modules
 @import '~bootstrap/scss/bootstrap';
 
 // icon

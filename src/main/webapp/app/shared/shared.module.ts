@@ -1,46 +1,46 @@
 import { NgModule } from '@angular/core';
-import { AlertModule, BreadcrumbModule, CardModule, ModalModule } from './components';
-import { SpinnerComponent } from './components/spinner/spinner.component';
+
 import { YSharedLibsModule } from './shared-libs.module';
 import { FindLanguageFromKeyPipe } from './language/find-language-from-key.pipe';
+import { TranslateDirective } from './language/translate.directive';
 import { AlertComponent } from './alert/alert.component';
 import { AlertErrorComponent } from './alert/alert-error.component';
-import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
-import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
+import { DurationPipe } from './date/duration.pipe';
+import { FormatMediumDatetimePipe } from './date/format-medium-datetime.pipe';
+import { FormatMediumDatePipe } from './date/format-medium-date.pipe';
+import { SortByDirective } from './sort/sort-by.directive';
+import { SortDirective } from './sort/sort.directive';
+import { ItemCountComponent } from './pagination/item-count.component';
+
 @NgModule({
-  imports: [YSharedLibsModule, PerfectScrollbarModule, AlertModule, CardModule, BreadcrumbModule, ModalModule],
+  imports: [YSharedLibsModule],
   declarations: [
     FindLanguageFromKeyPipe,
+    TranslateDirective,
     AlertComponent,
     AlertErrorComponent,
-    LoginModalComponent,
     HasAnyAuthorityDirective,
-    SpinnerComponent
+    DurationPipe,
+    FormatMediumDatetimePipe,
+    FormatMediumDatePipe,
+    SortByDirective,
+    SortDirective,
+    ItemCountComponent
   ],
-  entryComponents: [LoginModalComponent],
   exports: [
     YSharedLibsModule,
     FindLanguageFromKeyPipe,
+    TranslateDirective,
     AlertComponent,
     AlertErrorComponent,
-    LoginModalComponent,
     HasAnyAuthorityDirective,
-    PerfectScrollbarModule,
-    AlertModule,
-    CardModule,
-    BreadcrumbModule,
-    ModalModule,
-    SpinnerComponent
-  ],
-  providers: [
-    {
-      provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+    DurationPipe,
+    FormatMediumDatetimePipe,
+    FormatMediumDatePipe,
+    SortByDirective,
+    SortDirective,
+    ItemCountComponent
   ]
 })
-export class YSharedModule {}
+export class SharedModule {}
