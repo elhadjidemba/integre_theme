@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { YSharedLibsModule } from './shared-libs.module';
+import { SharedLibsModule } from './shared-libs.module';
 import { FindLanguageFromKeyPipe } from './language/find-language-from-key.pipe';
 import { TranslateDirective } from './language/translate.directive';
 import { AlertComponent } from './alert/alert.component';
@@ -14,7 +14,7 @@ import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 
 @NgModule({
-  imports: [YSharedLibsModule],
+  imports: [SharedLibsModule],
   declarations: [
     FindLanguageFromKeyPipe,
     TranslateDirective,
@@ -26,10 +26,10 @@ import { ItemCountComponent } from './pagination/item-count.component';
     FormatMediumDatePipe,
     SortByDirective,
     SortDirective,
-    ItemCountComponent
+    ItemCountComponent,
   ],
   exports: [
-    YSharedLibsModule,
+    SharedLibsModule,
     FindLanguageFromKeyPipe,
     TranslateDirective,
     AlertComponent,
@@ -40,7 +40,7 @@ import { ItemCountComponent } from './pagination/item-count.component';
     FormatMediumDatePipe,
     SortByDirective,
     SortDirective,
-    ItemCountComponent
-  ]
+    ItemCountComponent,
+  ],
 })
 export class SharedModule {}

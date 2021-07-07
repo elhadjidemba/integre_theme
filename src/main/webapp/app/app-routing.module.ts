@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 //import { errorRoute } from './layouts/error/error.route';
 import { navbarRoute } from './layouts/admin/nav-bar/navbar.route';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
-import { Authority } from 'app/shared/constants/authority.constants';
+import { Authority } from 'app.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 
@@ -17,16 +17,16 @@ const LAYOUT_ROUTES = [navbarRoute];
         {
           path: 'admin',
           data: {
-            authorities: [Authority.ADMIN]
+            authorities: [Authority.ADMIN],
           },
           canActivate: [UserRouteAccessService],
-          loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule)
+          loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
         },
-        ...LAYOUT_ROUTES
+        ...LAYOUT_ROUTES,
       ],
       { enableTracing: DEBUG_INFO_ENABLED }
-    )
+    ),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class YAppRoutingModule {}

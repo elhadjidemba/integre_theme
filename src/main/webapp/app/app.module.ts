@@ -9,13 +9,15 @@ import { TranslateModule, TranslateService, TranslateLoader, MissingTranslationH
 import { NgxWebstorageModule, SessionStorageService } from 'ngx-webstorage';
 import * as dayjs from 'dayjs';
 import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { AppComponent } from './app.component';
+import './vendor';
 
 import { SERVER_API_URL } from './app.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import './config/dayjs';
 import { SharedModule } from 'app/shared/shared.module';
 import { YAppRoutingModule } from './app-routing.module';
-import { YHomeModule } from './home/home.module';
+import { HomeModule } from './home/home.module';
 import { EntityRoutingModule } from './entities/entity-routing.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { NgbDateDayjsAdapter } from './config/datepicker-adapter';
@@ -29,14 +31,38 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 
+import { NavBarComponent } from './layouts/admin/nav-bar/nav-bar.component';
+import { AdminComponent } from './layouts/admin/admin.component';
+import { AuthComponent } from './layouts/auth/auth.component';
+import { NavigationComponent } from './layouts/admin/navigation/navigation.component';
+import { NavContentComponent } from './layouts/admin/navigation/nav-content/nav-content.component';
+import { NavGroupComponent } from './layouts/admin/navigation/nav-content/nav-group/nav-group.component';
+import { NavCollapseComponent } from './layouts/admin/navigation/nav-content/nav-collapse/nav-collapse.component';
+import { NavItemComponent } from './layouts/admin/navigation/nav-content/nav-item/nav-item.component';
+import { NavLeftComponent } from './layouts/admin/nav-bar/nav-left/nav-left.component';
+import { NavSearchComponent } from './layouts/admin/nav-bar/nav-left/nav-search/nav-search.component';
+import { NavRightComponent } from './layouts/admin/nav-bar/nav-right/nav-right.component';
+import { ConfigurationComponent } from './layouts/admin/configuration/configuration.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+/* Menu Items */
+import { NavigationItem } from './layouts/admin/navigation/navigation';
+
+import { NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   imports: [
     BrowserModule,
     SharedModule,
-    YHomeModule,
+    HomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     EntityRoutingModule,
     YAppRoutingModule,
+    BrowserAnimationsModule,
+    NgbDropdownModule,
+    NgbTooltipModule,
+    NgbButtonsModule,
+    NgbTabsetModule,
     // Set this to true to enable service worker (PWA)
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
     HttpClientModule,
@@ -45,24 +71,39 @@ import { ErrorComponent } from './layouts/error/error.component';
       loader: {
         provide: TranslateLoader,
         useFactory: translatePartialLoader,
-        deps: [HttpClient]
+        deps: [HttpClient],
       },
       missingTranslationHandler: {
         provide: MissingTranslationHandler,
-        useFactory: missingTranslationHandler
-      }
-    })
+        useFactory: missingTranslationHandler,
+      },
+    }),
   ],
   providers: [
+    NavigationItem,
     Title,
     { provide: LOCALE_ID, useValue: 'fr' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
-    httpInterceptorProviders
+    httpInterceptorProviders,
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
-  bootstrap: [MainComponent]
+  declarations: [
+    AppComponent,
+    AdminComponent,
+    AuthComponent,
+    NavigationComponent,
+    NavContentComponent,
+    NavGroupComponent,
+    NavCollapseComponent,
+    NavItemComponent,
+    NavBarComponent,
+    NavLeftComponent,
+    NavSearchComponent,
+    NavRightComponent,
+    ConfigurationComponent,
+  ],
+  bootstrap: [AdminComponent],
 })
-export class AppModule {
+export class YAppModule {
   constructor(
     applicationConfigService: ApplicationConfigService,
     iconLibrary: FaIconLibrary,
@@ -74,11 +115,9 @@ export class AppModule {
     registerLocaleData(locale);
     iconLibrary.addIcons(...fontAwesomeIcons);
     dpConfig.minDate = {
-      year: dayjs()
-        .subtract(100, 'year')
-        .year(),
+      year: dayjs().subtract(100, 'year').year(),
       month: 1,
-      day: 1
+      day: 1,
     };
     translateService.setDefaultLang('fr');
     // if user have changed language and navigates away from the application and back to the application then use previously choosed language
