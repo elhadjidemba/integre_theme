@@ -22,7 +22,6 @@ import { NavLeftComponent } from './layouts/admin/nav-bar/nav-left/nav-left.comp
 import { NavSearchComponent } from './layouts/admin/nav-bar/nav-left/nav-search/nav-search.component';
 import { NavRightComponent } from './layouts/admin/nav-bar/nav-right/nav-right.component';
 import { ConfigurationComponent } from './layouts/admin/configuration/configuration.component';
-
 /* Menu Items */
 import { NavigationItem } from './layouts/admin/navigation/navigation';
 import { NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
