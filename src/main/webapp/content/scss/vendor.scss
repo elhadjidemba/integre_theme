@@ -39,12 +39,12 @@ File: style.css
 @import '~bootstrap/scss/bootstrap';
 
 // icon
-/*
-@import "themes/font/datta-icon";
-@import "themes/font/feather";
-@import "themes/font/fontawesome";
-@import "themes/font/cryptofont";
-*/
+
+@import 'themes/font/datta-icon';
+@import 'themes/font/feather';
+@import 'themes/font/fontawesome';
+@import 'themes/font/cryptofont';
+
 // bootstrap css
 @import 'themes/bootstrap-overlay/card';
 @import 'themes/bootstrap-overlay/button';

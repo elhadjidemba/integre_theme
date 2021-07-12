@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -25,21 +26,29 @@ import { ConfigurationComponent } from './layouts/admin/configuration/configurat
 /* Menu Items */
 import { NavigationItem } from './layouts/admin/navigation/navigation';
 import { NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
+const appRoutes: Routes = [{ path: 'home', component: AdminComponent }];
 @NgModule({
   imports: [
     BrowserModule,
     YSharedModule,
     YCoreModule,
     YHomeModule,
-    // jhipster-needle-angular-add-module JHipster will add new module here
+    RouterModule.forRoot(appRoutes),
     YEntityModule,
     YAppRoutingModule,
     BrowserAnimationsModule,
     NgbDropdownModule,
     NgbTooltipModule,
     NgbButtonsModule,
-    NgbTabsetModule
+    NgbTabsetModule,
+    PerfectScrollbarModule
   ],
   declarations: [
     AppComponent,
@@ -56,8 +65,14 @@ import { NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule 
     NavRightComponent,
     ConfigurationComponent
   ],
-  providers: [NavigationItem],
-  bootstrap: [AdminComponent]
+  providers: [
+    NavigationItem,
+    {
+      provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    }
+  ],
+  bootstrap: [AuthComponent]
   // declarations: [MainComponent, NavBarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   // bootstrap: [MainComponent]
 })
