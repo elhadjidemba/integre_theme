@@ -11,6 +11,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.events.subscribe(evt => {
+      // eslint-disable-next-line no-console
+      //  console.log("this: "+evt)
+      if (evt['url'] === '/' && evt['urlAfterRedirects'] === '/') this.router.navigate(['login']);
+
       if (!(evt instanceof NavigationEnd)) {
         return;
       }

@@ -33,14 +33,14 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
-const appRoutes: Routes = [{ path: 'home', component: AdminComponent }];
+//const appRoutes: Routes = [{ path: '', component: AuthComponent },{ path: 'home', component: AdminComponent }];
 @NgModule({
   imports: [
     BrowserModule,
     YSharedModule,
     YCoreModule,
     YHomeModule,
-    RouterModule.forRoot(appRoutes),
+    // RouterModule.forRoot(appRoutes),
     YEntityModule,
     YAppRoutingModule,
     BrowserAnimationsModule,
@@ -72,7 +72,7 @@ const appRoutes: Routes = [{ path: 'home', component: AdminComponent }];
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     }
   ],
-  bootstrap: [AuthComponent]
+  bootstrap: [AppComponent]
   // declarations: [MainComponent, NavBarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   // bootstrap: [MainComponent]
 })

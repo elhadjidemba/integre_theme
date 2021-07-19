@@ -1,7 +1,8 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { LoginService } from 'app/core/login/login.service';
 
@@ -10,7 +11,7 @@ import { LoginService } from 'app/core/login/login.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements AfterViewInit {
+export class AuthComponent implements OnInit {
   @ViewChild('username', { static: false })
   username?: ElementRef;
 
@@ -22,9 +23,9 @@ export class AuthComponent implements AfterViewInit {
     rememberMe: [false]
   });
 
-  constructor(private loginService: LoginService, private router: Router, private fb: FormBuilder) {}
+  constructor(private loginService: LoginService, private router: Router, private fb: FormBuilder, private location: Location) {}
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     if (this.username) {
       this.username.nativeElement.focus();
     }
@@ -61,8 +62,10 @@ export class AuthComponent implements AfterViewInit {
         () => (this.authenticationError = true)
       );
       */
-    //console.log("ok");
+    // console.log("submitted");
     this.router.navigate(['home']);
+    // const baseHerf = this.location['_baseHref'];
+    //window.location.href = this.location['_baseHref']+"/home"
   }
 
   register(): void {
